@@ -1,0 +1,8 @@
+#Distro Build Files
+build/*
+dist/*
+
+#IDE Files
+.idea/*
+env/*
+
