@@ -35,6 +35,8 @@ def app():
     diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
                          "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/Moe/")
 
+    print("%d file(s) differ between the given directories" % len(diff))
+
     if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/"):
         os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/")
 
