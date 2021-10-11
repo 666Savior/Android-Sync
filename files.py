@@ -19,10 +19,18 @@ def dirDiff(direcPrimary, direcSecondary):
     filesLog.debug(direcSecondary)
     filesLog.debug(str(os.path.join(direcSecondary, fstyle)))
 
-    primaryFiles = os.path.split(glob.glob(os.path.join(direcPrimary, fstyle)))[1]
-    secondaryFiles = os.path.split(glob.glob(os.path.join(direcSecondary, fstyle)))[1]
+    primaryFiles = glob.glob(os.path.join(direcPrimary, fstyle))
+    secondaryFiles = glob.glob(os.path.join(direcSecondary, fstyle))
 
-    diffList = [f for f in primaryFiles if f not in secondaryFiles]
+    primaryFnames = []
+    secondaryFnames = []
+    for file in primaryFiles:
+        primaryFnames.append(os.path.split(file)[1])
+    for file in secondaryFiles:
+        secondaryFnames.append(os.path.split(file)[1])
+        
+
+    diffList = [f for f in primaryFnames if f not in secondaryFnames]
 
     filesLog.info("Total file difference is %d files" % len(diffList))
 
