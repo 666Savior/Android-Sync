@@ -8,6 +8,7 @@ import time
 
 # --------------[Custom Module Import]-------------- #
 import StateCache
+import files
 
 # --------------[Logger Initialize]-------------- #
 logger = logging.getLogger('AndSync')
@@ -26,8 +27,12 @@ logger.addHandler(ch)
 
 
 def app():
-    pass
+    diff = files.dirDiff("D:\\~Dropbox\\Dropbox\\Pictures\\General\\Art\\Moe",
+                         "D:\\~Dropbox\\Dropbox\\Pictures\\General\\Art\\Moe - Copy")
 
+    for file in diff:
+        print(file)
+    pass
 
 
 if __name__ == "__main__":
