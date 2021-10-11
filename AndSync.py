@@ -27,8 +27,8 @@ logger.addHandler(ch)
 
 
 def app():
-    diff = files.dirDiff("D:\\~Dropbox\\Dropbox\\Pictures\\General\\Art\\Moe",
-                         "D:\\~Dropbox\\Dropbox\\Pictures\\General\\Art\\Moe - Copy")
+    diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
+                         "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Copy/")
 
     for file in diff:
         print(file)
