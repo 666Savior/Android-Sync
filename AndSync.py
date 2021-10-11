@@ -23,3 +23,12 @@ fh.setFormatter(formatter)
 ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
+
+
+def app():
+    pass
+
+
+
+if __name__ == "__main__":
+    app()
