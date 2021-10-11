@@ -4,6 +4,7 @@ import os
 import os.path
 import re
 import fnmatch
+import hashlib
 
 filesLog = logging.getLogger('AndSync.Files')
 
@@ -66,3 +67,24 @@ def locateFile(direcStart, maxDepth, fname, direcSkip=None):
         filesLog.debug(file)
 
     return fileList
+
+def isDuplicate(primaryFile, secondaryFile):
+
+    if not os.path.isfile(primaryFile) or not os.path.isfile(secondaryFile):
+        filesLog.warning("One of the provided filenames does not exist or the current user does not have permissions to access")
+
+    with open(primaryFile, 'rb') as primary:
+        primaryHash = hashlib.sha512(primary.read()).hexdigest()
+    with open(secondaryFile, 'rb') as secondary:
+        secondaryHash = hashlib.sha512(secondary.read()).hexdigest()
+
+    filesLog.info("First file's hash: %s" % primaryHash)
+    filesLog.info("Second file's hash: %s" % secondaryHash)
+
+    if primaryHash == secondaryHash:
+        filesLog.info("File hashes match, files are duplicate")
+        return True
+    else:
+        filesLog.info("File hashes do not match")
+        return False
+    
