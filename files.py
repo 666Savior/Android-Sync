@@ -13,11 +13,11 @@ def dirDiff(direcPrimary, direcSecondary):
     if not os.path.isdir(direcPrimary) or not os.path.isdir(direcSecondary):
         filesLog.warning("One of the directories provided does not exist or current user does not have required permissions to access")
         return
-
+    fstyle = "/*.*"
     diffList = []
 
-    primaryFiles = glob.glob(direcPrimary)
-    secondaryFiles = glob.glob(direcSecondary)
+    primaryFiles = glob.glob(os.path.join(direcPrimary, fstyle))
+    secondaryFiles = glob.glob(os.path.join(direcSecondary, fstyle))
 
     diffList = [f for f in primaryFiles if f not in secondaryFiles]
 
