@@ -29,6 +29,9 @@ logger.addHandler(ch)
 
 
 def app():
+
+    fh.setLevel(logging.INFO)
+
     diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
                          "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Copy/")
 
@@ -40,7 +43,8 @@ def app():
         name = list(os.path.split(file))
         logger.debug(name[1])
 
-        shutil.copy(file, os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+        shutil.copy(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/", file),
+                    os.path.join(dirTransfer, name[1]), follow_symlinks=True)
         #print(name[1])
     pass
 
