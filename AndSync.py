@@ -1,8 +1,10 @@
 # --------------[Library Import]-------------- #
 import logging
 import logging.handlers
+import os.path
 import queue
 import re
+import shutil
 import threading
 import time
 
@@ -30,8 +32,16 @@ def app():
     diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
                          "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Copy/")
 
+    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/"):
+        os.makedirs("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/")
+
+    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/"
     for file in diff:
-        print(file)
+        name = list(os.path.split(file))
+        logger.debug(name[1])
+
+        shutil.copy(file, os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+        #print(name[1])
     pass
 
 
