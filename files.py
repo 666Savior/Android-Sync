@@ -34,9 +34,6 @@ def dirDiff(direcPrimary, direcSecondary):
     #diffList = [f for f in primaryFnames if f not in secondaryFnames]
     diffList = [f for f in primaryFiles if os.path.split(f)[1] not in secondaryFnames]
 
-    for i in range(5):
-        print(diffList[i])
-
     filesLog.info("Total file difference is %d files" % len(diffList))
 
     return diffList
