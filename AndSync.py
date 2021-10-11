@@ -32,8 +32,9 @@ def app():
 
     fh.setLevel(logging.INFO)
 
-    diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
-                         "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/Moe/")
+    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/"
+    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/Moe/"
+    diff = files.dirDiff(direcPrimary, direcSecondary)
 
     print("%d file(s) differ between the given directories" % len(diff))
 
@@ -47,7 +48,15 @@ def app():
 
         copyLoc = files.locateFile("D:/~Dropbox/Dropbox/Pictures/Phone Copy/", 5, name[1])
         if len(copyLoc) == 0:
-            shutil.copy(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+        elif len(copyLoc) == 1:
+            # TODO move file in primary directory to match secondary directory
+
+            path = os.path.split(copyLoc[0])[0].replace("D:/~Dropbox/Dropbox/Pictures/Phone Copy", "") + "/"
+            print(path)
+            
+            #shutil.copy2()
+            pass
 
         #print(name[1])
     pass
