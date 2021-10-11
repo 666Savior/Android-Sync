@@ -59,7 +59,8 @@ def locateFile(direcStart, maxDepth, fname, direcSkip=None):
         allFiles = glob.glob(searchDir)
         fileList.extend([file for file in allFiles if os.path.split(file)[1] == fname]) #and file != os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))])
 
-    filesLog.info("Found filename in %d other location(s)" % len(fileList))
+    filesLog.debug(fname)
+    filesLog.debug("Found filename in %d other location(s)" % len(fileList))
 
     for file in fileList:
         filesLog.debug(file)
