@@ -33,7 +33,7 @@ def app():
     fh.setLevel(logging.INFO)
 
     diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
-                         "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Copy/")
+                         "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Phone Copy/")
 
     if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/"):
         os.makedirs("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/")
@@ -48,6 +48,7 @@ def app():
         #print(name[1])
     pass
 
+    files.locateFile("D:/~Dropbox/Dropbox/Pictures/General/Art/", 5, "00IQMG8.png")
 
 if __name__ == "__main__":
     app()
