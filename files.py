@@ -87,4 +87,3 @@ def isDuplicate(primaryFile, secondaryFile):
     else:
         filesLog.info("File hashes do not match")
         return False
-    
