@@ -40,9 +40,10 @@ def dirDiff(direcPrimary, direcSecondary):
 
     return diffList
 
-def locateFile(direcStart, maxDepth, fname):
+
+def locateFile(direcStart, maxDepth, fname, direcSkip=None):
     """Searches for the given filename starting in the given start directory and recursively scanning to the specified depth.
-    Returns None if the the cannot be found within the given parameters"""
+    Returns None if the the cannot be found within the given parameters."""
 
     fileList = []
 
@@ -52,14 +53,16 @@ def locateFile(direcStart, maxDepth, fname):
         else:
             maxGlob = ("*/" * (depth - 1) +fname)
 
-        filesLog.info(maxGlob)
-
         searchDir = os.path.join(direcStart, maxGlob)
-        filesLog.info(searchDir)
+        filesLog.debug(searchDir)
 
         allFiles = glob.glob(searchDir)
-        fileList.extend(file for file in allFiles if (os.path.split(file)[1] == fname and file != os.path.join(direcStart, fname)))
+        fileList.extend([file for file in allFiles if (os.path.split(file)[1] == fname and file != os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))])
 
-        filesLog.info("Found filename in %d other location(s)" % len(fileList))
-        
+    filesLog.info(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))
+    filesLog.info("Found filename in %d other location(s)" % len(fileList))
+
+    for file in fileList:
+        filesLog.info(file)
+
     return
