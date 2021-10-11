@@ -33,22 +33,24 @@ def app():
     fh.setLevel(logging.INFO)
 
     diff = files.dirDiff("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/",
-                         "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Phone Copy/")
+                         "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/Moe/")
 
-    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/"):
-        os.makedirs("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/")
+    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/"):
+        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/")
 
-    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe - Needs Transfer/"
+    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/"
     for file in diff:
         name = list(os.path.split(file))
         logger.debug(name[1])
 
-        shutil.copy(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/", file),
-                    os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+        copyLoc = files.locateFile("D:/~Dropbox/Dropbox/Pictures/Phone Copy/", 5, name[1])
+        if len(copyLoc) == 0:
+            shutil.copy(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+
         #print(name[1])
     pass
 
-    files.locateFile("D:/~Dropbox/Dropbox/Pictures/General/Art/", 5, "00IQMG8.png")
+    # files.locateFile("D:/~Dropbox/Dropbox/Pictures/General/Art/", 5, "00IQMG8.png")
 
 if __name__ == "__main__":
     app()

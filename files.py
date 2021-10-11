@@ -51,18 +51,17 @@ def locateFile(direcStart, maxDepth, fname, direcSkip=None):
         if depth == 1:
             maxGlob = fname
         else:
-            maxGlob = ("*/" * (depth - 1) +fname)
+            maxGlob = ("*/" * (depth - 1) + fname)
 
         searchDir = os.path.join(direcStart, maxGlob)
         filesLog.debug(searchDir)
 
         allFiles = glob.glob(searchDir)
-        fileList.extend([file for file in allFiles if (os.path.split(file)[1] == fname and file != os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))])
+        fileList.extend([file for file in allFiles if os.path.split(file)[1] == fname]) #and file != os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))])
 
-    filesLog.info(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art\\Moe - Phone Copy\\", fname))
     filesLog.info("Found filename in %d other location(s)" % len(fileList))
 
     for file in fileList:
-        filesLog.info(file)
+        filesLog.debug(file)
 
-    return
+    return fileList
