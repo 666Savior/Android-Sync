@@ -32,18 +32,20 @@ def app():
 
     fh.setLevel(logging.INFO)
 
-    direcPrimary= "D:/~Dropbox/Dropbox/Pictures/General/"
+    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/"
     direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
     folder = "Reactions/"
-    diff = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
+    diffPrimaryToSecondary = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
+    diffSecondaryToPrimary = files.dirDiff(os.path.join(direcSecondary, folder),os.path.join(direcPrimary, folder))
 
-    print("%d file(s) differ between the given directories" % len(diff))
+    print("%d file(s) differ between primary and secondary directory" % len(diffPrimaryToSecondary))
+    print("%d file(s) differ between secondary and primary directory" % len(diffSecondaryToPrimary))
 
     if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)):
         os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder))
 
     dirTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
-    for file in diff:
+    for file in diffPrimaryToSecondary:
         name = list(os.path.split(file))
         logger.debug(name[1])
 
