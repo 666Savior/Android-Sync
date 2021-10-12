@@ -34,14 +34,15 @@ def app():
 
     direcPrimary= "D:/~Dropbox/Dropbox/Pictures/General/"
     direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
-    diff = files.dirDiff(direcPrimary, direcSecondary)
+    folder = "Reactions/"
+    diff = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
 
     print("%d file(s) differ between the given directories" % len(diff))
 
-    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/"):
-        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/")
+    if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)):
+        os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder))
 
-    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/"
+    dirTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
     for file in diff:
         name = list(os.path.split(file))
         logger.debug(name[1])
