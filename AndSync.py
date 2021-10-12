@@ -66,9 +66,6 @@ def app():
             shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/To Delete/", name[1]), follow_symlinks=True)
             os.remove(file)
 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 if __name__ == "__main__":
     app()
