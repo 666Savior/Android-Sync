@@ -32,23 +32,26 @@ def app():
 
     fh.setLevel(logging.INFO)
 
-    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/Art/"
-    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/"
+    direcPrimary= "D:/~Dropbox/Dropbox/Pictures/General/"
+    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
     diff = files.dirDiff(direcPrimary, direcSecondary)
 
     print("%d file(s) differ between the given directories" % len(diff))
 
-    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/"):
-        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/")
+    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/"):
+        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/")
 
-    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/"
+    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/"
     for file in diff:
         name = list(os.path.split(file))
         logger.debug(name[1])
 
         copyLoc = files.locateFile("D:/~Dropbox/Dropbox/Pictures/Phone Copy/", 5, name[1])
+        logger.debug(len(copyLoc))
+        logger.debug(copyLoc)
+
         if len(copyLoc) == 0:
-            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
         elif len(copyLoc) == 1:
 
             logger.info(copyLoc[0])
