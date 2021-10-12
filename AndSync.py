@@ -32,31 +32,40 @@ def app():
 
     fh.setLevel(logging.INFO)
 
-    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/Art/Moe/"
-    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/Moe/"
+    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/Art/"
+    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/Art/"
     diff = files.dirDiff(direcPrimary, direcSecondary)
 
     print("%d file(s) differ between the given directories" % len(diff))
 
-    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/"):
-        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/")
+    if not os.path.isdir("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/"):
+        os.makedirs("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/")
 
-    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/"
+    dirTransfer = "D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/"
     for file in diff:
         name = list(os.path.split(file))
         logger.debug(name[1])
 
         copyLoc = files.locateFile("D:/~Dropbox/Dropbox/Pictures/Phone Copy/", 5, name[1])
         if len(copyLoc) == 0:
-            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/Art/Moe/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
+            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
         elif len(copyLoc) == 1:
-            # TODO move file in primary directory to match secondary directory
+         
+            logger.info(copyLoc[0])
+            path = os.path.split(copyLoc[0])[0].replace("D:/~Dropbox/Dropbox/Pictures/Phone Copy\\", "") + "/"
+            path = path.replace("\\", "/")
 
-            path = os.path.split(copyLoc[0])[0].replace("D:/~Dropbox/Dropbox/Pictures/Phone Copy", "") + "/"
-            print(path)
-            
-            #shutil.copy2()
-            pass
+            logger.debug(name[1])
+            logger.info(path)
+            logger.debug(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path))
+
+            if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path)):
+                os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path))
+
+            shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", os.path.join(path, name[1])), follow_symlinks=True)
+            shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/To Delete/", name[1]), follow_symlinks=True)
+            os.remove(file)
+
 
         #print(name[1])
     pass
