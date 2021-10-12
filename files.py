@@ -46,10 +46,38 @@ def dirFolderScan(direc):
         filesLog.warning("Directory provided does not exist or current user does not have permission to access")
 
     folders = glob.glob(f'{direc}/*/**/', recursive=True)
-    filesLog.info(folders)
+    filesLog.debug(folders)
 
     return folders
 
+def dirSync(direcPrimary, direcSecondary, destructive=False):
+    """Adjusts secondary directory to contain the same folders as primary directory. If destructive is true,
+    deletes any folders in the secondary directory that do no exist in the primary directory"""
+
+    primaryTmp = dirFolderScan(direcPrimary)
+    primary = []
+    for path in primaryTmp:
+        primary.append(re.sub(direcPrimary.rstrip("/"), '', path))
+    filesLog.debug(primary)
+
+    secondaryTmp = dirFolderScan(direcSecondary)
+    secondary = []
+    for path in secondaryTmp:
+        secondary.append(re.sub(direcSecondary.rstrip("/"), '', path))
+    filesLog.debug(secondary)
+
+    diff = [f for f in primary if f not in secondary]
+    print(diff)
+
+    #for path in diff:
+    #    if not os.path.isdir(os.path.join(direcSecondary.rstrip("/"), path)):
+    #        os.makedirs(os.path.join(direcSecondary.rstrip("/"), path))
+
+    if destructive:
+        diffDestroy = [f for f in secondary if f not in primary]
+        print(diffDestroy)
+
+    return
 
 def locateFile(direcStart, maxDepth, fname, direcSkip=None):
     """Searches for the given filename starting in the given start directory and recursively scanning to the specified depth.
