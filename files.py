@@ -45,7 +45,7 @@ def dirFolderScan(direc):
     if not os.path.isdir(direc):
         filesLog.warning("Directory provided does not exist or current user does not have permission to access")
 
-    folders = glob.glob(f'{direc}/*/**/')
+    folders = glob.glob(f'{direc}/*/**/', recursive=True)
     filesLog.info(folders)
 
     return folders
