@@ -1,12 +1,13 @@
 import glob
+import hashlib
 import logging
 import os
 import os.path
 import re
 import fnmatch
-import hashlib
 
 filesLog = logging.getLogger('AndSync.Files')
+
 
 def dirDiff(direcPrimary, direcSecondary):
     """Compares primary directory to secondary directory and returns a list of all files that differ between the two directoreies"""
@@ -37,6 +38,17 @@ def dirDiff(direcPrimary, direcSecondary):
     filesLog.info("Total file difference is %d files" % len(diffList))
 
     return diffList
+
+
+def dirFolderScan(direc):
+
+    if not os.path.isdir(direc):
+        filesLog.warning("Directory provided does not exist or current user does not have permission to access")
+
+    folders = glob.glob(f'{direc}/*/**/')
+    filesLog.info(folders)
+
+    return folders
 
 
 def locateFile(direcStart, maxDepth, fname, direcSkip=None):
