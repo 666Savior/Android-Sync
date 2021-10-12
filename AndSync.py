@@ -50,7 +50,7 @@ def app():
         if len(copyLoc) == 0:
             shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/Art/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
         elif len(copyLoc) == 1:
-         
+
             logger.info(copyLoc[0])
             path = os.path.split(copyLoc[0])[0].replace("D:/~Dropbox/Dropbox/Pictures/Phone Copy\\", "") + "/"
             path = path.replace("\\", "/")
@@ -65,12 +65,6 @@ def app():
             shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", os.path.join(path, name[1])), follow_symlinks=True)
             shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/To Delete/", name[1]), follow_symlinks=True)
             os.remove(file)
-
-
-        #print(name[1])
-    pass
-
-    # files.locateFile("D:/~Dropbox/Dropbox/Pictures/General/Art/", 5, "00IQMG8.png")
 
 if __name__ == "__main__":
     app()
