@@ -32,46 +32,70 @@ def app():
 
     fh.setLevel(logging.INFO)
 
-    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/General/"
-    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
-    folder = "Reactions/"
-    diffPrimaryToSecondary = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
-    diffSecondaryToPrimary = files.dirDiff(os.path.join(direcSecondary, folder),os.path.join(direcPrimary, folder))
+    direcPrimary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
+    direcSecondary = "D:/~Dropbox/Dropbox/Pictures/General/"
 
-    print("%d file(s) differ between primary and secondary directory" % len(diffPrimaryToSecondary))
-    print("%d file(s) differ between secondary and primary directory" % len(diffSecondaryToPrimary))
+    trashbin = "D:/~Dropbox/Dropbox/Pictures/To Delete/"
 
-    if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)):
-        os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder))
+    if not os.path.isdir(trashbin):
+        os.makedirs(trashbin)
 
-    dirTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
-    for file in diffPrimaryToSecondary:
-        name = list(os.path.split(file))
-        logger.debug(name[1])
+    foldersPrimary = files.dirFolderScan(direcPrimary)
+    foldersSecondary = files.dirFolderScan(direcSecondary)
 
-        copyLoc = files.locateFile("D:/~Dropbox/Dropbox/Pictures/Phone Copy/", 5, name[1])
-        logger.debug(len(copyLoc))
-        logger.debug(copyLoc)
+    # Make sure the secondary directory has the same folders as primary
+    files.dirSync(direcPrimary, direcSecondary)
 
-        if len(copyLoc) == 0:
-            shutil.copy2(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", file), os.path.join(dirTransfer, name[1]), follow_symlinks=True)
-        elif len(copyLoc) == 1:
+    for folder in foldersPrimary:
 
-            logger.info(copyLoc[0])
-            path = os.path.split(copyLoc[0])[0].replace("D:/~Dropbox/Dropbox/Pictures/Phone Copy\\", "") + "/"
-            path = path.replace("\\", "/")
+        folder = folder.replace("\\", "/").replace(direcPrimary, "")
+        logger.debug(folder)
 
+        dirTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
+        if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)):
+            os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder))
+
+        logger.info(os.path.join(direcPrimary, folder))
+        logger.info(os.path.join(direcSecondary, folder))
+
+        diffPrimaryToSecondary = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
+        diffSecondaryToPrimary = files.dirDiff(os.path.join(direcSecondary, folder), os.path.join(direcPrimary, folder))
+
+        print("%d file(s) differ between primary and secondary directory" % len(diffPrimaryToSecondary))
+        print("%d file(s) differ between secondary and primary directory" % len(diffSecondaryToPrimary))
+
+        for file in diffPrimaryToSecondary:
+            name = list(os.path.split(file))
             logger.debug(name[1])
-            logger.info(path)
-            logger.debug(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path))
 
-            if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path)):
-                os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", path))
+            # check for copies in secondary outside of current folder
+            copyLoc = files.locateFile(direcSecondary, 5, name[1])
+            logger.debug(len(copyLoc))
+            logger.debug(copyLoc)
 
-            shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/General/", os.path.join(path, name[1])), follow_symlinks=True)
-            shutil.copy2(src=file, dst=os.path.join("D:/~Dropbox/Dropbox/Pictures/To Delete/", name[1]), follow_symlinks=True)
-            os.remove(file)
+            # If there are no copies anywhere in secondary directory, copy file from primary
+            if len(copyLoc) == 0:
+                logger.debug(os.path.join(os.path.join(direcPrimary, folder), file))
+                logger.debug(os.path.join(os.path.join(direcSecondary, folder), name[1]))
+                #shutil.copy2(os.path.join(os.path.join(direcPrimary, folder), file), os.path.join(os.path.join(direcSecondary, folder), name[1]), follow_symlinks=True)
 
+            # If there is a copy elsewhere in secondary, copy file to match primary directory's file's location
+            elif len(copyLoc) == 1:
+
+                src = copyLoc[0]
+                dst = os.path.join(os.path.join(direcSecondary, folder), name[1])
+                logger.debug(src)
+                logger.debug(dst)
+
+                trashPath = os.path.split(src)[0].replace("\\", "/").replace(direcSecondary, "")
+
+                logger.debug(os.path.join(os.path.join(trashbin, trashPath), name[1]))
+
+                #shutil.copy2(src=src, dst=dst, follow_symlinks=True)
+                #shutil.copy2(src=src, dst=trashPath, follow_symlinks=True)
+                #os.remove(src)
+            elif len(copyLoc) > 1:
+                logger.warning("File found in multiple locations")
 
 if __name__ == "__main__":
     app()
