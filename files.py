@@ -69,9 +69,17 @@ def dirSync(direcPrimary, direcSecondary, destructive=False):
     diff = [f for f in primary if f not in secondary]
     print(diff)
 
-    #for path in diff:
-    #    if not os.path.isdir(os.path.join(direcSecondary.rstrip("/"), path)):
-    #        os.makedirs(os.path.join(direcSecondary.rstrip("/"), path))
+    print(direcPrimary)
+    print(direcSecondary.rstrip("/"))
+    for path in diff:
+
+        path = path.replace("\\", "/").lstrip("/")
+
+        print(path)
+        print(os.path.join(direcSecondary, path))
+
+        if not os.path.isdir(os.path.join(direcSecondary, path)):
+            os.makedirs(os.path.join(direcSecondary, path))
 
     if destructive:
         diffDestroy = [f for f in secondary if f not in primary]
@@ -81,7 +89,7 @@ def dirSync(direcPrimary, direcSecondary, destructive=False):
 
 def locateFile(direcStart, maxDepth, fname, direcSkip=None):
     """Searches for the given filename starting in the given start directory and recursively scanning to the specified depth.
-    Returns None if the the cannot be found within the given parameters."""
+    Returns None if the file cannot be found within the given parameters."""
 
     fileList = []
 
@@ -104,6 +112,7 @@ def locateFile(direcStart, maxDepth, fname, direcSkip=None):
         filesLog.debug(file)
 
     return fileList
+
 
 def isDuplicate(primaryFile, secondaryFile):
 
