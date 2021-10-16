@@ -67,16 +67,13 @@ def dirSync(direcPrimary, direcSecondary, destructive=False):
     filesLog.debug(secondary)
 
     diff = [f for f in primary if f not in secondary]
-    print(diff)
 
-    print(direcPrimary)
-    print(direcSecondary.rstrip("/"))
     for path in diff:
 
         path = path.replace("\\", "/").lstrip("/")
 
-        print(path)
-        print(os.path.join(direcSecondary, path))
+        logging.debug(path)
+        logging.debug(os.path.join(direcSecondary, path))
 
         if not os.path.isdir(os.path.join(direcSecondary, path)):
             os.makedirs(os.path.join(direcSecondary, path))
