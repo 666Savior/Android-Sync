@@ -51,7 +51,7 @@ def app():
         folder = folder.replace("\\", "/").replace(direcPrimary, "")
         logger.debug(folder)
 
-        dirTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
+        direcTransfer = os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)
         if not os.path.isdir(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder)):
             os.makedirs(os.path.join("D:/~Dropbox/Dropbox/Pictures/Phone - To Transfer/", folder))
 
@@ -77,7 +77,8 @@ def app():
             if len(copyLoc) == 0:
                 logger.debug(os.path.join(os.path.join(direcPrimary, folder), file))
                 logger.debug(os.path.join(os.path.join(direcSecondary, folder), name[1]))
-                #shutil.copy2(os.path.join(os.path.join(direcPrimary, folder), file), os.path.join(os.path.join(direcSecondary, folder), name[1]), follow_symlinks=True)
+                #shutil.copy2(os.path.join(os.path.join(direcPrimary, folder), file),
+                #             os.path.join(os.path.join(direcSecondary, folder), name[1]), follow_symlinks=True)
 
             # If there is a copy elsewhere in secondary, copy file to match primary directory's file's location
             elif len(copyLoc) == 1:
