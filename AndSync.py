@@ -61,8 +61,8 @@ def app():
         diffPrimaryToSecondary = files.dirDiff(os.path.join(direcPrimary, folder), os.path.join(direcSecondary, folder))
         diffSecondaryToPrimary = files.dirDiff(os.path.join(direcSecondary, folder), os.path.join(direcPrimary, folder))
 
-        print("%d file(s) differ between primary and secondary directory" % len(diffPrimaryToSecondary))
-        print("%d file(s) differ between secondary and primary directory" % len(diffSecondaryToPrimary))
+        logger.debug("%d file(s) differ between primary and secondary directory" % len(diffPrimaryToSecondary))
+        logger.debug("%d file(s) differ between secondary and primary directory" % len(diffSecondaryToPrimary))
 
         for file in diffPrimaryToSecondary:
             name = list(os.path.split(file))
