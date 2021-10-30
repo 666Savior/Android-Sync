@@ -77,8 +77,8 @@ def app():
             if len(copyLoc) == 0:
                 logger.debug(os.path.join(os.path.join(direcPrimary, folder), file))
                 logger.debug(os.path.join(os.path.join(direcSecondary, folder), name[1]))
-                #shutil.copy2(os.path.join(os.path.join(direcPrimary, folder), file),
-                #             os.path.join(os.path.join(direcSecondary, folder), name[1]), follow_symlinks=True)
+                shutil.copy2(os.path.join(os.path.join(direcPrimary, folder), file),
+                             os.path.join(os.path.join(direcSecondary, folder), name[1]), follow_symlinks=True)
 
             # If there is a copy elsewhere in secondary, copy file to match primary directory's file's location
             elif len(copyLoc) == 1:
@@ -92,9 +92,9 @@ def app():
 
                 logger.debug(os.path.join(os.path.join(trashbin, trashPath), name[1]))
 
-                #shutil.copy2(src=src, dst=dst, follow_symlinks=True)
-                #shutil.copy2(src=src, dst=trashPath, follow_symlinks=True)
-                #os.remove(src)
+                shutil.copy2(src=src, dst=dst, follow_symlinks=True)
+                shutil.copy2(src=src, dst=trashPath, follow_symlinks=True)
+                os.remove(src)
             elif len(copyLoc) > 1:
                 logger.warning("File found in multiple locations")
 
@@ -108,8 +108,8 @@ def app():
                 # Copy file from secondary directory to transfer holding directory
                 logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
                 logger.debug(os.path.join(os.path.join(direcTransfer, folder), name[1]))
-                #shutil.copy2(os.path.join(os.path.join(direcSecondary, folder), file),
-                #            os.path.join(os.path.join(direcTransfer, folder), name[1]), follow_symlinks=True)
+                shutil.copy2(os.path.join(os.path.join(direcSecondary, folder), file),
+                             os.path.join(os.path.join(direcTransfer, folder), name[1]), follow_symlinks=True)
 
 
 if __name__ == "__main__":
