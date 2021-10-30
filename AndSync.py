@@ -30,7 +30,7 @@ logger.addHandler(ch)
 
 def app():
 
-    fh.setLevel(logging.DEBUG)
+    fh.setLevel(logging.INFO)
 
     direcPrimary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
     direcSecondary = "D:/~Dropbox/Dropbox/Pictures/General/"
@@ -88,13 +88,16 @@ def app():
                 logger.debug(src)
                 logger.debug(dst)
 
-                trashPath = os.path.split(src)[0].replace("\\", "/").replace(direcSecondary, "")
+                trashFolder = os.path.split(src)[0].replace("\\", "/").replace(direcSecondary, "")
+                if not os.path.isdir(os.path.join(trashbin, trashFolder)):
+                    os.makedirs(os.path.join(trashbin, trashFolder))
 
-                logger.debug(os.path.join(os.path.join(trashbin, trashPath), name[1]))
-                print(os.path.join(os.path.join(trashbin, trashPath), name[1]))
+                trashPath = os.path.join(os.path.join(trashbin, trashFolder), name[1]).replace("\\", "/")
+                logger.debug(os.path.join(os.path.join(trashbin, trashFolder), name[1]))
+
                 shutil.copy2(src=src, dst=dst, follow_symlinks=True)
                 shutil.copy2(src=src, dst=trashPath, follow_symlinks=True)
-                os.remove(src)
+                #os.remove(src)
             elif len(copyLoc) > 1:
                 logger.warning("File found in multiple locations")
 
