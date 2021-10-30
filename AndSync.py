@@ -97,5 +97,19 @@ def app():
             elif len(copyLoc) > 1:
                 logger.warning("File found in multiple locations")
 
+        # Loop through any files that the secondary directory has that is not present in primary directory
+        if len(diffSecondaryToPrimary) > 0:
+            logger.info("Syncing files from secondary")
+            for file in diffSecondaryToPrimary:
+                name = list(os.path.split(file))
+                logger.debug(name[1])
+
+                # Copy file from secondary directory to transfer holding directory
+                logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
+                logger.debug(os.path.join(os.path.join(direcTransfer, folder), name[1]))
+                #shutil.copy2(os.path.join(os.path.join(direcSecondary, folder), file),
+                #            os.path.join(os.path.join(direcTransfer, folder), name[1]), follow_symlinks=True)
+
+
 if __name__ == "__main__":
     app()
