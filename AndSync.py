@@ -156,7 +156,6 @@ def app():
                                 os.makedirs(altDirecTransfer)
 
                             logger.debug(os.path.join(altDirecTransfer, name[1]))
-                            print(os.path.join(altDirecTransfer, name[1]))
                             shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
                                          dst=os.path.join(altDirecTransfer, name[1]), follow_symlinks=True)
 
