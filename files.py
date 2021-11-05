@@ -15,7 +15,7 @@ def dirDiff(direcPrimary, direcSecondary):
     if not os.path.isdir(direcPrimary) or not os.path.isdir(direcSecondary):
         filesLog.warning("One of the directories provided does not exist or current user does not have required permissions to access")
         return
-    fstyle = "*"
+    fstyle = "*.*"
     filesLog.debug(direcPrimary)
     filesLog.debug(str(os.path.join(direcPrimary, fstyle)))
     filesLog.debug(direcSecondary)
