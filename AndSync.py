@@ -97,6 +97,7 @@ def app():
 
                 shutil.copy2(src=src, dst=dst, follow_symlinks=True)
                 shutil.copy2(src=src, dst=trashPath, follow_symlinks=True)
+                logger.warning("Removing file '" + trashPath + "'")
                 #os.remove(src)
             elif len(copyLoc) > 1:
                 logger.warning("File found in multiple locations")
@@ -125,10 +126,12 @@ def app():
 
                     for item in copyLoc:
                         # after file is moved, move any other copies to the trash folder
-                        print(os.path.join(trashbin, name[1]))
-                        shutil.copy2(src=item, dst=os.path.join(trashbin, name[1]))
-                        #os.remove(item)
+                        logger.debug(os.path.join(trashbin, name[1]))
+                        shutil.copy2(src=file, dst=os.path.join(trashbin, name[1]))
+                        logger.warning("Removing file '" + file + "'")
+                        os.remove(file)
                 else:
+                    if 
                     # Copy file from secondary directory to transfer holding directory
                     logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
                     logger.debug(os.path.join(direcTransfer, name[1]))
