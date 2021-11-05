@@ -30,7 +30,7 @@ logger.addHandler(ch)
 
 def app():
 
-    fh.setLevel(logging.INFO)
+    fh.setLevel(logging.DEBUG)
 
     direcPrimary = "D:/~Dropbox/Dropbox/Pictures/Phone Copy/"
     direcSecondary = "D:/~Dropbox/Dropbox/Pictures/General/"
@@ -108,11 +108,29 @@ def app():
                 name = list(os.path.split(file))
                 logger.debug(name[1])
 
-                # Copy file from secondary directory to transfer holding directory
-                logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
-                logger.debug(os.path.join(direcTransfer, name[1]))
-                shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
-                             dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
+                copyLoc = files.locateFile(direcPrimary, 5, name[1])
+
+                # If the file in the secondary directory exists in a different folder in the primary directory
+                # move the file in the secondary directory to match
+                if len(copyLoc) > 0:
+
+                    src = file
+                    dst = os.path.join(direcSecondary, copyLoc[0].replace("\\", "/").replace(direcPrimary, ""))
+                    shutil.copy2(src=src, dst=dst, follow_symlinks=True)
+
+                    for item in copyLoc:
+                        # after file is moved, move any other copies to the trash folder
+                        print(os.path.join(trashbin, name[1]))
+                        shutil.copy2(src=item, dst=os.path.join(trashbin, name[1]))
+                        #os.remove(item)
+                else:
+                    # Copy file from secondary directory to transfer holding directory
+                    logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
+                    logger.debug(os.path.join(direcTransfer, name[1]))
+
+                    print(os.path.join(direcTransfer, name[1]))
+                    shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
+                                 dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
 
 
 if __name__ == "__main__":
