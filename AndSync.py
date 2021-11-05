@@ -131,12 +131,40 @@ def app():
                         logger.warning("Removing file '" + file + "'")
                         os.remove(file)
                 else:
-                    if 
-                    # Copy file from secondary directory to transfer holding directory
+
                     logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
-                    logger.debug(os.path.join(direcTransfer, name[1]))
-                    shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
-                                 dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
+                    if 'Art' in folder:
+                        # for the time being we are separating out anything that doesn't follow
+                        # pixiv's *_p# style of filenames in the art directory
+                        if re.search('_p\\d+[.]', name[1]):
+                            logger.info(name[1] + " matched '_p\\\\d+[.]' ")
+                            # Copy file from secondary directory to transfer holding directory
+
+                            logger.debug(os.path.join(direcTransfer, name[1]))
+                            shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
+                                         dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
+
+                        # if the files don't match the expected naming convention they are probably duplicates
+                        # There is a small chance they are good. For now, separate them and let me figure them out
+                        else:
+                            logger.warning(name[1] + " did not match '_p\\\\d+[.]' ")
+
+                            altDirecTransfer = direcTransfer.rstrip("/") + " - Quar/"
+                            logger.debug(altDirecTransfer)
+
+                            if not os.path.isdir(altDirecTransfer):
+                                os.makedirs(altDirecTransfer)
+
+                            logger.debug(os.path.join(altDirecTransfer, name[1]))
+                            print(os.path.join(altDirecTransfer, name[1]))
+                            shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
+                                         dst=os.path.join(altDirecTransfer, name[1]), follow_symlinks=True)
+
+                    else:
+                        logger.debug(os.path.join(direcTransfer, name[1]))
+                        shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
+                                     dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
+
 
 
 if __name__ == "__main__":
