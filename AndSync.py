@@ -116,6 +116,11 @@ def app():
 
                     src = file
                     dst = os.path.join(direcSecondary, copyLoc[0].replace("\\", "/").replace(direcPrimary, ""))
+
+                    # Make sure the folder exists before attempting to move files to it
+                    if not os.path.isdir(os.path.split(dst)[0].replace("\\", "/") + "/"):
+                        os.makedirs(os.path.split(dst)[0].replace("\\", "/") + "/")
+
                     shutil.copy2(src=src, dst=dst, follow_symlinks=True)
 
                     for item in copyLoc:
@@ -127,8 +132,6 @@ def app():
                     # Copy file from secondary directory to transfer holding directory
                     logger.debug(os.path.join(os.path.join(direcSecondary, folder), file))
                     logger.debug(os.path.join(direcTransfer, name[1]))
-
-                    print(os.path.join(direcTransfer, name[1]))
                     shutil.copy2(src=os.path.join(os.path.join(direcSecondary, folder), file),
                                  dst=os.path.join(direcTransfer, name[1]), follow_symlinks=True)
 
